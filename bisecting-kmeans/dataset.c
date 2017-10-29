@@ -7,3 +7,16 @@
 //
 
 #include "dataset.h"
+
+
+// Generates 'random' data for the dataset
+void generateElements(int totalDatapoints, double* dataset) {
+    srand(1);
+    
+    for(int i = 0; i < totalDatapoints; i++)
+    {
+        dataset[i] = (double)(rand() % 100);
+    }
+}
+
+

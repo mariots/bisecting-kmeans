@@ -8,7 +8,12 @@
 
 #include <stdio.h>
 
+#define dim         2           // Number of Dimensions
+#define elements    24          // Number of Elements
+#define clusters    3           // Number of Clusters
+
 int main(int argc, const char * argv[]) {
+    
     
     
     

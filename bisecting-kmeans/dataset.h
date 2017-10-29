@@ -10,9 +10,11 @@
 #define dataset_h
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
 /* Base Data Structure */
-void generateElements(int dim, double* dataset);
+void generateElements(int totalDatapoints, double* dataset);
 void setElementAtIndex(int dim, int index, double* dataset);
 double* getElementAtIndex(int dim, int index,  double* dataset);
 
