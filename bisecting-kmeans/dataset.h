@@ -14,14 +14,15 @@
 #include <math.h>
 
 /* Base Data Structure */
-void generateElements(int totalDatapoints, double* dataset);
-void setElementAtIndex(int dim, int index, double* dataset);
+void generateElements(int totalCoordinates, double* dataset);
 double* getElementAtIndex(int dim, int index,  double* dataset);
+double* generateRandomElement(double** boundary);
+void getClusterCentroidElement(int dim, int cluster, double* dataElement, double** cluster_centroid);
+void setClusterCentroid(int dim, int cluster, double* data, double** cluster_centroid);
 
 /* Calculate functions */
 double distance(double* element1, double* element2, int dim);
 double meanOfDimension(int dim, double* dataset);
 double* centroid(int dim, double* dataset);
-
 
 #endif /* dataset_h */
