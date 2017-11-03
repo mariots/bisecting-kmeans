@@ -39,6 +39,18 @@ void printCentroid(double **cluster_centroid, int k, int dim) {
             printf("cluster_centroid[%d][%d]: %f\n", i, j, cluster_centroid[i][j]);
         }
     }
+    
+    /* Test Case
+    double dataset[6] = { 1, 4, 2, 5, 3, 6 };
+    
+    printf("%d\n", (1 + 2 + 3) / 3);
+    printf("%d\n", (4 + 5 + 6) / 3);
+    
+    centroid(dim, dataset, 3, cluster_centroid[0]);
+    
+    printCentroid(cluster_centroid, 3, dim);
+     
+     */
 }
 
 void printClusterSize(int *clusterSize, int k) {

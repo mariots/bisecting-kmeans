@@ -15,6 +15,9 @@
 #define elements        24          // Number of Elements
 #define clusters        4           // Number of Clusters
 
+
+
+
 int main(int argc, const char * argv[]) {
     
     /*
@@ -60,12 +63,9 @@ int main(int argc, const char * argv[]) {
          Finished Setup
      */
     
-    generateElements(totalCoordinates, data);
+    generate_elements(totalCoordinates, data);
     
-    
-    
-    
-    
+    bisecting_kmeans(dim, elements, totalCoordinates, clusters, data, cluster_size, cluster_start, cluster_radius, cluster_centroid, cluster_assign);
     
     return 0;
 }

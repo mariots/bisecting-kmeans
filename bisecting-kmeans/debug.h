@@ -1,6 +1,6 @@
 //
 //  debug.h
-//  bisecting-kmeans
+//  bisecting-clustermeans
 //
 //  Created by Mario Jimenez on 10/30/17.
 //  Copyright © 2017 mariot. All rights reserved.
@@ -14,11 +14,11 @@
 /* debug functions */
 void printSpecificDataPoint(double *data, int requestedElement, int dim);
 void printData(double *data, int totalElements, int dim);
-void printBoundry(double **cluster_bdry, int k, int dim);
-void printCentroid(double **cluster_centroid, int k, int dim);
-void printClusterSize(int *clusterSize, int k);
-void printClusterStart(int *clusterStart, int k);
+void printBoundry(double **cluster_bdry, int cluster, int dim);
+void printCentroid(double **cluster_centroid, int cluster, int dim);
+void printClusterSize(int *clusterSize, int cluster);
+void printClusterStart(int *clusterStart, int cluster);
 void printClusterAssign(int *clusterAssign, int ndata);
-void printClusterRadius(double *clusterRadius, int k);
+void printClusterRadius(double *clusterRadius, int cluster);
 
 #endif /* debug_h */

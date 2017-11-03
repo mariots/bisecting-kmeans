@@ -7,3 +7,12 @@
 //
 
 #include "bisecting-kmeans.h"
+
+
+void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters, double *data, int *cluster_size, int *cluster_start, double *cluster_radius, double **cluster_centroid, int *cluster_assign) {
+
+    
+}
+
+
+
