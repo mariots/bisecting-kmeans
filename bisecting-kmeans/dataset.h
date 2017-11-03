@@ -23,6 +23,6 @@ void setClusterCentroid(int dim, int cluster, double* data, double** cluster_cen
 /* Calculate functions */
 double distance(double* element1, double* element2, int dim);
 double meanOfDimension(int dim, double* dataset);
-double* centroid(int dim, double* dataset);
+void centroid(int dim, double* dataset, int numElements, double* cluster_centroid);
 
 #endif /* dataset_h */
