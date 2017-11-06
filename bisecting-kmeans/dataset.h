@@ -16,6 +16,7 @@
 /* Base Data Structure */
 void generate_elements(int totalCoordinates, double* dataset);
 double* get_element_at_index(int dim, int index,  double* dataset);
+void set_element_at_index(int dim, int dataIndex, double* element, double* data);
 void get_cluster_centroid_element(int dim, int cluster, double* dataElement, double** cluster_centroid);
 void set_cluster_centroid(int dim, int cluster, double* data, double** cluster_centroid);
 

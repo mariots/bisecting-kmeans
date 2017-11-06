@@ -27,6 +27,13 @@ double* get_element_at_index(int dim, int elementIndex, double* data) {
     return &data[dim*elementIndex]; // [dim * elementIndex]: will give the starting index of the element requested
 }
 
+// Sets an element to a index of a data array
+void set_element_at_index(int dim, int dataIndex, double* element, double* data) {
+    for (int i = 0; i < dim; i++) {
+        data[(dim * dataIndex) + i] = element[i];
+    }
+}
+
 // Returns an element from the cluster_centroid at specified index to the dataElement argument
 void get_cluster_centroid_element(int dim, int cluster, double* dataElement, double** cluster_centroid) {
     for (int i = 0; i < dim; i++) {
