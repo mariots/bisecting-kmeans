@@ -22,7 +22,7 @@
  
  ****************************/
 
-void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters, double *data, int *cluster_size, int *cluster_start, double *cluster_radius, double **cluster_centroid, int *cluster_assign) {
+void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters, double* data, int* cluster_size, int* cluster_start, double* cluster_radius, double** cluster_centroid, int* cluster_assign) {
 
     // 1. Compute Centroid
     centroid(dim, data, cluster_size[0], cluster_centroid[0]);
@@ -37,8 +37,8 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
     int nextCluster = 1; // This will always be incremented in loop.
     
     // 2. Choose left point of the given cluster
-    double *leftPoint = get_element_at_index(dim, chosenCluster, data);
-    double *rightPoint;
+    double* leftPoint = get_element_at_index(dim, chosenCluster, data);
+    double* rightPoint;
     int furthestIndex = 0;
     double largestDistance = 0.0;
     
@@ -80,7 +80,7 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
         // If the element is in the cluster we are working on
         if(cluster_assign[element] == chosenCluster) {
             
-            double *curElement = get_element_at_index(dim, element, data);
+            double* curElement = get_element_at_index(dim, element, data);
             
             // If the distance of the right point is less than the distance from the left point.
             // Set the element to be in the nextCluster and update the size and assign arrays.
@@ -93,10 +93,58 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
     }
     printClusterSize(cluster_size, clusters);
     printClusterAssign(cluster_assign, elements);
+    printData(data, totalCoordinates, dim);
+    
+    // 5. Find centroid of each new cluster
+    
+    double* chosenClusterData = (double *)calloc((cluster_size[chosenCluster] * dim), sizeof(double *));
+    double* nextClusterData = (double *)calloc((cluster_size[chosenCluster] * dim), sizeof(double *));
+    
+    get_cluster_subset(dim, totalCoordinates, chosenCluster, data, cluster_size, cluster_assign, chosenClusterData);
+    get_cluster_subset(dim, totalCoordinates, nextCluster, data, cluster_size, cluster_assign, nextClusterData);
+    
+    for (int i = 0; i < cluster_size[chosenCluster] * dim; i++) {
+        printf("chosenClusterData[%d]: %f\n", i, chosenClusterData[i]);
+    }
+    
+    for (int i = 0; i < cluster_size[nextCluster] * dim; i++) {
+        printf("nextClusterData[%d]: %f\n", i, nextClusterData[i]);
+    }
     
     
 }
 
-void bi_partition(int dim, int elements, int totalCoordinates, int clusters, double *data, int *cluster_size, int *cluster_start, double *cluster_radius, double **cluster_centroid, int *cluster_assign, int chosenCluster) {
+void get_cluster_subset(int dim, int totalCoordinates, int cluster, double* data, int* cluster_size, int* cluster_assign, double* newCluster) {
+    
+    double* element = (double *)calloc(dim, sizeof(double *));
+    int nextIndex = 0;
+    
+    printf("cluster: %d\n", cluster);
+    printf("(cluster_size[chosenCluster] * dim): %d\n", (cluster_size[cluster] * dim));
+    
+    /*
+     For every individual data point:
+     Check to see if the element index belongs to the cluster
+     if so
+     get the element and set it to the next index in the chosenCluster data
+     */
+    for (int i = 0; i < totalCoordinates; i++) {
+        // If the element is in the cluster we are working on
+        if(cluster_assign[i] == cluster) {
+            printf("index: %d\n", i);
+            element = get_element_at_index(dim, i, data);
+            
+            for (int i = 0; i < dim; i++) {
+                //printf("element[%d]: %f\n", i, element[i]);
+            }
+            
+            set_element_at_index(dim, nextIndex, element, newCluster);
+            //printf("clusterData[%d]: %f\n", nextIndex, newCluster[nextIndex]);
+            nextIndex += 1;
+        }
+    }
+}
+
+void bi_partition(int dim, int elements, int totalCoordinates, int clusters, double* data, int* cluster_size, int* cluster_start, double* cluster_radius, double** cluster_centroid, int* cluster_assign, int chosenCluster) {
     
 }
