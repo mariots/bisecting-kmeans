@@ -13,6 +13,7 @@
 
 /* debug functions */
 void printSpecificDataPoint(double *data, int requestedElement, int dim);
+void printElement(double *data, int dim);
 void printData(double *data, int totalElements, int dim);
 void printBoundry(double **cluster_bdry, int cluster, int dim);
 void printCentroid(double **cluster_centroid, int cluster, int dim);

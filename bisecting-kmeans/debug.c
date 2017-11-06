@@ -16,6 +16,12 @@ void printSpecificDataPoint(double *data, int requestedElement, int dim) {
     }
 }
 
+void printElement(double *data, int dim) {
+    for (int i = 0; i < dim; i++) {
+        printf("array[%d]: %f\n", i, data[i]);
+    }
+}
+
 void printData(double *data, int totalElements, int dim) {
     for (int i = 0; i < totalElements; i++) {
         if(i % dim == 0) {
