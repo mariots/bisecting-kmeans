@@ -15,9 +15,6 @@
 #define elements        24          // Number of Elements
 #define clusters        4           // Number of Clusters
 
-
-
-
 int main(int argc, const char * argv[]) {
     
     /*

@@ -65,8 +65,8 @@ void printClusterStart(int *clusterStart, int k) {
     }
 }
 
-void printClusterAssign(int *clusterAssign, int ndata) {
-    for (int i = 0; i < ndata; i++) {
+void printClusterAssign(int *clusterAssign, int elements) {
+    for (int i = 0; i < elements; i++) {
         printf("cluster_assign[%d]: %d\n", i, clusterAssign[i]);
     }
 }
