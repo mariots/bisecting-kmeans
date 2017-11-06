@@ -103,14 +103,6 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
     get_cluster_subset(dim, totalCoordinates, chosenCluster, data, cluster_size, cluster_assign, chosenClusterData);
     get_cluster_subset(dim, totalCoordinates, nextCluster, data, cluster_size, cluster_assign, nextClusterData);
     
-    for (int i = 0; i < cluster_size[chosenCluster] * dim; i++) {
-        printf("chosenClusterData[%d]: %f\n", i, chosenClusterData[i]);
-    }
-    
-    for (int i = 0; i < cluster_size[nextCluster] * dim; i++) {
-        printf("nextClusterData[%d]: %f\n", i, nextClusterData[i]);
-    }
-    
     
 }
 
@@ -118,9 +110,6 @@ void get_cluster_subset(int dim, int totalCoordinates, int cluster, double* data
     
     double* element = (double *)calloc(dim, sizeof(double *));
     int nextIndex = 0;
-    
-    printf("cluster: %d\n", cluster);
-    printf("(cluster_size[chosenCluster] * dim): %d\n", (cluster_size[cluster] * dim));
     
     /*
      For every individual data point:
@@ -131,15 +120,8 @@ void get_cluster_subset(int dim, int totalCoordinates, int cluster, double* data
     for (int i = 0; i < totalCoordinates; i++) {
         // If the element is in the cluster we are working on
         if(cluster_assign[i] == cluster) {
-            printf("index: %d\n", i);
             element = get_element_at_index(dim, i, data);
-            
-            for (int i = 0; i < dim; i++) {
-                //printf("element[%d]: %f\n", i, element[i]);
-            }
-            
             set_element_at_index(dim, nextIndex, element, newCluster);
-            //printf("clusterData[%d]: %f\n", nextIndex, newCluster[nextIndex]);
             nextIndex += 1;
         }
     }
