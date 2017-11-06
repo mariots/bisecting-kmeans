@@ -98,10 +98,11 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
     // 5. Find centroid of each new cluster
     
     double* chosenClusterData = (double *)calloc((cluster_size[chosenCluster] * dim), sizeof(double *));
-    double* nextClusterData = (double *)calloc((cluster_size[chosenCluster] * dim), sizeof(double *));
+    double* nextClusterData = (double *)calloc((cluster_size[nextCluster] * dim), sizeof(double *));
     
     get_cluster_subset(dim, totalCoordinates, chosenCluster, data, cluster_size, cluster_assign, chosenClusterData);
     get_cluster_subset(dim, totalCoordinates, nextCluster, data, cluster_size, cluster_assign, nextClusterData);
+    
     
     
 }
