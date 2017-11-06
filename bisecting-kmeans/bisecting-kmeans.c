@@ -103,7 +103,8 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
     get_cluster_subset(dim, totalCoordinates, chosenCluster, data, cluster_size, cluster_assign, chosenClusterData);
     get_cluster_subset(dim, totalCoordinates, nextCluster, data, cluster_size, cluster_assign, nextClusterData);
     
-    
+    centroid(dim, chosenClusterData, cluster_size[chosenCluster], cluster_centroid[chosenCluster]);
+    centroid(dim, nextClusterData, cluster_size[nextCluster], cluster_centroid[nextCluster]);
     
 }
 
