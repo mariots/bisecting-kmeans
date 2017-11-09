@@ -68,7 +68,7 @@ double distance(double* element1, double* element2, int dim) {
  For a given dataset, find the centroid
  
  */
-void centroid(int dim, double* dataset, int num_elements, double* cluster_centroid) {
+void centroid(int dim, double* data, int num_elements, double* cluster_centroid) {
     
     double total;
     
@@ -79,7 +79,7 @@ void centroid(int dim, double* dataset, int num_elements, double* cluster_centro
         
         /* For each element in the dataset */
         for (int element = 0; element < num_elements; element++) {
-            total += dataset[(dim * element) + indexOfDimension];
+            total += data[(dim * element) + indexOfDimension];
         }
         
         cluster_centroid[indexOfDimension] = total / (double) num_elements;
@@ -91,13 +91,7 @@ void centroid(int dim, double* dataset, int num_elements, double* cluster_centro
  For a given dataset, find the sum of squares
  
  */
-int sum_of_squares(int dim, int elements, int clusters, double* dataset, int* cluster_size, int* cluster_assign, double** cluster_centroid) {
-    
-    // sum of each (element - centroid) * (element - centroid)
-    
-    // 24 (x, y) elements
-    // 1  (w, w2) centroid
-    // for each (x - w) * (x - w) + (y - w2) * (y - w2)
+int sum_of_squares(int dim, int elements, int clusters, double* data, int* cluster_size, int* cluster_assign, double** cluster_centroid) {
     
     double largestError = 0.0;
     double curError = 0.0;
@@ -118,18 +112,8 @@ int sum_of_squares(int dim, int elements, int clusters, double* dataset, int* cl
             
             // If the element is in the cluster we are working on
             if(cluster_assign[element] == cluster) {
-                
                 printf("(%d == %d)\n", cluster_assign[element], cluster);
-                
-                // Get the element
-                double* curElement = get_element_at_index(dim, element, dataset);
-                
-                // For each dimension, find and add to the error
-                for (int dimension = 0; dimension < dim; dimension++) {
-                    printf("(%f - %f)*(%f - %f)\n", curElement[dimension], cluster_centroid[cluster][dimension], curElement[dimension], cluster_centroid[cluster][dimension]);
-                    
-                    curError += (curElement[dimension] - cluster_centroid[cluster][dimension]) * (curElement[dimension] - cluster_centroid[cluster][dimension]);
-                }
+                curError += sum_of_squares_for_dim(dim, element, data, cluster_centroid[cluster]);
             }
         }
         
@@ -145,15 +129,16 @@ int sum_of_squares(int dim, int elements, int clusters, double* dataset, int* cl
     return largestErrorCluster;
 }
 
-
-
-
-//Mean squared error of two vectors
-double MeanSquaredError(int dim, double* vec1, double* vec2) {
-    int i;
+double sum_of_squares_for_dim(int dim, int element, double* data, double* cluster_centroid) {
     double error = 0;
-    for (i = 0; i < dim; i++) {
-        error += (vec1[i] - vec2[i])*(vec1[i] - vec2[i]);
+    double* curElement = get_element_at_index(dim, element, data);
+    
+    // For each dimension, find and add to the error
+    for (int dimension = 0; dimension < dim; dimension++) {
+        printf("(%f - %f)*(%f - %f)\n", curElement[dimension], cluster_centroid[dimension], curElement[dimension], cluster_centroid[dimension]);
+        
+        error += (curElement[dimension] - cluster_centroid[dimension]) * (curElement[dimension] - cluster_centroid[dimension]);
     }
-    return error/dim;
+    
+    return error;
 }
