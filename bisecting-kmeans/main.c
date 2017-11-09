@@ -12,7 +12,7 @@
 #include "debug.h"
 
 #define dim             2           // Number of Dimensions
-#define elements        4          // Number of Elements
+#define elements        10          // Number of Elements
 #define clusters        4           // Number of Clusters
 
 int main(int argc, const char * argv[]) {
