@@ -99,11 +99,11 @@ int sum_of_squares(int dim, int elements, int clusters, double* data, int* clust
     
     // For each cluster
     for (int cluster = 0; cluster < clusters; cluster++) {
-        printf("Cluster: %d\n", cluster);
+        
+        curError = 0; // Reset cur Error
         
         // If the cluster size of the cluster we are about to check is less than 1, skip that cluster.
         if(cluster_size[cluster] < 1) {
-            printf("Skipping cluster: %d\n", cluster_size[cluster]);
             continue;
         }
         
@@ -112,18 +112,15 @@ int sum_of_squares(int dim, int elements, int clusters, double* data, int* clust
             
             // If the element is in the cluster we are working on
             if(cluster_assign[element] == cluster) {
-                printf("(%d == %d)\n", cluster_assign[element], cluster);
                 curError += sum_of_squares_for_dim(dim, element, data, cluster_centroid[cluster]);
             }
         }
         
-        printf("curError > largestError: %f > %f\n", curError, largestError);
+        // If the current error is greater than the largest error, update largest cluster
         if (curError > largestError) {
             largestError = curError;
             largestErrorCluster = cluster;
-            printf("Largest Error Cluster: %d\n\n", largestErrorCluster);
         }
-        
     }
     
     return largestErrorCluster;
@@ -135,8 +132,6 @@ double sum_of_squares_for_dim(int dim, int element, double* data, double* cluste
     
     // For each dimension, find and add to the error
     for (int dimension = 0; dimension < dim; dimension++) {
-        printf("(%f - %f)*(%f - %f)\n", curElement[dimension], cluster_centroid[dimension], curElement[dimension], cluster_centroid[dimension]);
-        
         error += (curElement[dimension] - cluster_centroid[dimension]) * (curElement[dimension] - cluster_centroid[dimension]);
     }
     
