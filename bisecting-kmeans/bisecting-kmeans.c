@@ -16,7 +16,7 @@
  3. Compute right point as furthest point from left point
  4. Divide points into each cluster, assign each element to closest point
  5. Find centroid of each new cluster
- 6. Computer sum of squares on each cluster
+ 6. Compute sum of squares on each cluster
  7. For the cluster with the largest error rate from the sum of squares,
     choose that cluster and go to step 2.
  
@@ -30,7 +30,7 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
     printCentroid(cluster_centroid, clusters, dim);
     printClusterAssign(cluster_assign, elements);
     
-    // Recursive loop:
+    // Loop:
     
     // Used for inital testing and setting cluster
     int chosenCluster = 0;
@@ -105,6 +105,11 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
     
     centroid(dim, chosenClusterData, cluster_size[chosenCluster], cluster_centroid[chosenCluster]);
     centroid(dim, nextClusterData, cluster_size[nextCluster], cluster_centroid[nextCluster]);
+    
+    // 6. Compute sum of squares on each cluster
+    printCentroid(cluster_centroid, clusters, dim);
+    int largestErrorCluster = sum_of_squares(dim, elements, clusters, data, cluster_size, cluster_assign, cluster_centroid);
+    printf("Largest Cluster: %d\n", largestErrorCluster);
     
 }
 

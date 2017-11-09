@@ -23,5 +23,6 @@ void set_cluster_centroid(int dim, int cluster, double* data, double** cluster_c
 /* Calculate functions */
 double distance(double* element1, double* element2, int dim);
 void centroid(int dim, double* dataset, int numElements, double* cluster_centroid);
+int sum_of_squares(int dim, int elements, int clusters, double* dataset, int* cluster_size, int* cluster_assign, double** cluster_centroid);
 
 #endif /* dataset_h */
