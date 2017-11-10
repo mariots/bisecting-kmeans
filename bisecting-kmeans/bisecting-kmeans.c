@@ -16,8 +16,9 @@
  3. Compute right point as furthest point from left point
  4. Divide points into each cluster, assign each element to closest point
  5. Find centroid of each new cluster
- 6. Compute sum of squares on each cluster
- 7. For the cluster with the largest error rate from the sum of squares,
+ 6. Compute radius's for the new clusters
+ 7. Compute sum of squares on each cluster
+ 8. For the cluster with the largest error rate from the sum of squares,
     choose that cluster and go to step 2.
  
  ****************************/
@@ -25,17 +26,18 @@
 void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters, double* data, int* cluster_size, int* cluster_start, double* cluster_radius, double** cluster_centroid, int* cluster_assign) {
 
     // 1. Compute Centroid
+    // printf("\nStep 1: Compute Centroid.\n");
     centroid(dim, data, cluster_size[0], cluster_centroid[0]);
     printData(data, totalCoordinates, dim);
     printClusterSize(cluster_size, clusters);
     printCentroid(cluster_centroid, clusters, dim);
     printClusterAssign(cluster_assign, elements);
     
-    printf("\n\nAll setup\n\n");
+    // printf("\n\nAll setup\n\n");
     
     int largestErrorCluster = 0;
     
-    // Step 7, loop over steps 2 - 6 until we have all our clusters.
+    // Step 8, loop over steps 2 - 6 until we have all our clusters.
     for (int curCluster = 0; curCluster < clusters - 1; curCluster++) {
         
         // Used for inital testing and setting cluster
@@ -46,6 +48,7 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
         
         
         // 2. Choose left point of the given cluster
+        // printf("\nStep 2: Choose left point of the given cluster.\n");
         double* leftPoint = get_element_at_index(dim, chosenCluster, data);
         double* rightPoint;
         int furthestIndex = 0;
@@ -55,6 +58,7 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
         printElement(leftPoint, dim);
         
         // 3. Compute right point as furthest point from left point
+        // printf("\nStep 3: Compute right point as furthest point from left point.\n");
         // For every element in the cluster
         for (int element = 0; element < elements; element++) {
             
@@ -102,11 +106,12 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
                 }
             }
         }
-        printf("\nStep 4: New clusters should be assigned.\n");
+        // printf("\nStep 4: New clusters should be assigned.\n");
         printClusterSize(cluster_size, clusters);
         printClusterAssign(cluster_assign, elements);
         
         // 5. Find centroid of each new cluster
+        // printf("\nStep 5: Find centroid of each new cluster.\n");
         
         double* chosenClusterData = (double *)calloc((cluster_size[chosenCluster] * dim), sizeof(double *));
         double* nextClusterData = (double *)calloc((cluster_size[nextCluster] * dim), sizeof(double *));
@@ -117,8 +122,15 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
         centroid(dim, chosenClusterData, cluster_size[chosenCluster], cluster_centroid[chosenCluster]);
         centroid(dim, nextClusterData, cluster_size[nextCluster], cluster_centroid[nextCluster]);
         
-        // 6. Compute sum of squares on each cluster
-        printCentroid(cluster_centroid, clusters, dim);
+        // 6. Compute radius's for the new clusters
+        // printf("\nStep 6: Compute radius's for the new clusters.\n");
+        get_radius_for_cluster(dim, elements, chosenCluster, data, cluster_radius, cluster_centroid, cluster_assign);
+        get_radius_for_cluster(dim, elements, nextCluster, data, cluster_radius, cluster_centroid, cluster_assign);
+        
+        
+        // 7. Compute sum of squares on each cluster
+        // printf("\nStep 7: Compute sum of squares on each cluster.\n");
+        // printCentroid(cluster_centroid, clusters, dim);
         largestErrorCluster = sum_of_squares(dim, elements, clusters, data, cluster_size, cluster_assign, cluster_centroid);
         
     }
@@ -143,5 +155,40 @@ void get_cluster_subset(int dim, int totalCoordinates, int cluster, double* data
             nextIndex += 1;
         }
     }
+}
+
+void get_radius_for_cluster(int dim, int elements, int clusterIndex, double* data, double* cluster_radius, double** cluster_centroid, int* cluster_assign) {
+    int furthest_radius = 0;
+    
+    // For every element in the cluster
+    for (int element = 0; element < elements; element++) {
+        
+        // If the element is in the cluster we are working on
+        if(cluster_assign[element] == clusterIndex) {
+            
+            double *curElement = get_element_at_index(dim, element, data);
+            
+            // Get the distance between the current element and the leftPoint
+            double tempDistance = distance(cluster_centroid[clusterIndex], curElement, dim);
+            
+            // If the largest distance is less than the current elements distance, set current distance to largest
+            // and update the furthestPoint
+            if(cluster_radius[clusterIndex] < tempDistance) {
+                cluster_radius[clusterIndex] = tempDistance;
+                furthest_radius = element;
+            }
+        }
+    }
+}
+
+int nearest_neighbor_search(int dim, int elements, int totalCoordinates, int clusters, double* query, double* data, int* cluster_size, int* cluster_start, double* cluster_radius, double** cluster_centroid, int* cluster_assign) {
+    
+    int cloestElement = 0;
+    
+    
+    
+    
+    
+    return cloestElement;
 }
 

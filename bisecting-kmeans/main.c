@@ -32,9 +32,10 @@ int main(int argc, const char * argv[]) {
     double cluster_radius[clusters];
     int cluster_assign[elements];           // Assigns each element (note an element is elements*dim values) to a cluster, 0...clusters clusters
     
-    // set clusters and cluster_start to 0
+    // set cluster_start and radius to 0
     for (int i = 0; i < clusters; i++) {
         cluster_start[i] = 0;
+        cluster_radius[i] = 0;
     }
     
     // set cluster_assign to all 0s
@@ -63,6 +64,13 @@ int main(int argc, const char * argv[]) {
     generate_elements(totalCoordinates, data);
     
     bisecting_kmeans(dim, elements, totalCoordinates, clusters, data, cluster_size, cluster_start, cluster_radius, cluster_centroid, cluster_assign);
+    
+    double query[2] = {50.0, 50.0};
+    
+    int closestElement = nearest_neighbor_search(dim, elements, totalCoordinates, clusters, query, data, cluster_size, cluster_start, cluster_radius, cluster_centroid, cluster_assign);
+    
+    printf("\n\nCloset Element: \n");
+    printElement(get_element_at_index(dim, closestElement, data), dim);
     
     return 0;
 }

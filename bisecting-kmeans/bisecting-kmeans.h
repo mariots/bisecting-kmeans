@@ -17,5 +17,8 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
 
 void get_cluster_subset(int dim, int totalCoordinates, int cluster, double* data, int* cluster_size, int* cluster_assign, double* newCluster);
 
+void get_radius_for_cluster(int dim, int elements, int clusterIndex, double* data, double* cluster_radius, double** cluster_centroid, int* cluster_assign);
+
+int nearest_neighbor_search(int dim, int elements, int totalCoordinates, int clusters, double* query, double* data, int* cluster_size, int* cluster_start, double* cluster_radius, double** cluster_centroid, int* cluster_assign);
 
 #endif /* bisecting_kmeans_h */
