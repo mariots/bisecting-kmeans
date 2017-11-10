@@ -43,8 +43,8 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
         // Used for inital testing and setting cluster
         int chosenCluster = largestErrorCluster;
         int nextCluster = curCluster + 1; // This will always be incremented in loop.
-        printf("\nchosenCluster: %d\n", chosenCluster);
-        printf("nextCluster: %d\n\n", nextCluster);
+        // printf("\nchosenCluster: %d\n", chosenCluster);
+        // printf("nextCluster: %d\n\n", nextCluster);
         
         
         // 2. Choose left point of the given cluster
@@ -54,8 +54,8 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
         int furthestIndex = 0;
         double largestDistance = 0.0;
         
-        printf("Left Point: \n");
-        printElement(leftPoint, dim);
+        // printf("Left Point: \n");
+        // printElement(leftPoint, dim);
         
         // 3. Compute right point as furthest point from left point
         // printf("\nStep 3: Compute right point as furthest point from left point.\n");
@@ -84,8 +84,8 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
         }
         
         rightPoint = get_element_at_index(dim, furthestIndex, data);
-        printf("Right Point: \n");
-        printElement(rightPoint, dim);
+        // printf("Right Point: \n");
+        // printElement(rightPoint, dim);
         
         // 4. Divide points into each cluster, assign each element to closest point
         
@@ -107,8 +107,8 @@ void bisecting_kmeans(int dim, int elements, int totalCoordinates, int clusters,
             }
         }
         // printf("\nStep 4: New clusters should be assigned.\n");
-        printClusterSize(cluster_size, clusters);
-        printClusterAssign(cluster_assign, elements);
+        // printClusterSize(cluster_size, clusters);
+        // printClusterAssign(cluster_assign, elements);
         
         // 5. Find centroid of each new cluster
         // printf("\nStep 5: Find centroid of each new cluster.\n");
@@ -183,12 +183,45 @@ void get_radius_for_cluster(int dim, int elements, int clusterIndex, double* dat
 
 int nearest_neighbor_search(int dim, int elements, int totalCoordinates, int clusters, double* query, double* data, int* cluster_size, int* cluster_start, double* cluster_radius, double** cluster_centroid, int* cluster_assign) {
     
-    int cloestElement = 0;
+    int closestElement = 0;
+    double closetDistance = 0.0;
     
+    // For each cluster
+    for (int cluster = 0; cluster < clusters; cluster++) {
+        
+        // Get the distance from the cluster_centroid to the query point
+        double dist = distance(cluster_centroid[cluster], query, dim);
+        
+        // If the distance to the centroid is smaller than the radius, its in the cluster.
+        if(dist < cluster_radius[cluster]) {
+            // Point is within the cluster
+            printf("Query point is inside of cluster %d\n", cluster);
+            
+            // For every point in this cluster, check to see if the element is closer than the currentClosestElement
+            for (int element = 0; element < elements; element++) {
+                
+                // If the element is in the cluster we are working on
+                if(cluster_assign[element] == cluster) {
+                    
+                    double* curElement = get_element_at_index(dim, element, data);
+                    
+                    // Get the distance between the current element and the leftPoint
+                    double tempDistance = distance(query, curElement, dim);
+                    
+                    // If the current distance is less than the current elements distance, set current distance to closet
+                    // and update the cloestElement
+                    if(tempDistance < closetDistance) {
+                        printf("closetDistance < tempDistance: %f < %f\n", closetDistance, tempDistance);
+                        closetDistance = tempDistance;
+                        closestElement = element;
+                        printf("closestElement: %d\n", closestElement);
+                    }
+                }
+            }
+        }
+        
+    }
     
-    
-    
-    
-    return cloestElement;
+    return closestElement;
 }
 
